@@ -68,7 +68,12 @@
 
             // Display the data in the HTML
             document.getElementById('field1').innerText = `TDS Value: ${tdsValue}`;
-            document.getElementById('field2').innerText = `Quality of Water: ${waterQuality}`;
+            if(tdsValue ==0){
+                document.getElementById('field2').innerText = `${waterQuality}`;
+            }
+            else{
+                document.getElementById('field2').innerText = `Quality of Water: ${waterQuality}`;
+            }
         } catch (error) {
             console.error('Error fetching data:', error);
             document.getElementById('field1').innerText = 'Error fetching data.';
