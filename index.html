@@ -56,24 +56,28 @@
 
             // Determine water quality based on TDS value
             let waterQuality;
-            if (tdsValue == 0 ) {
-                waterQuality = 'Insert the TDS probe into Water';
-            }else if (tdsValue < 10) {
-                waterQuality = 'Good for drinking';
-            }else if (tdsValue >= 10 && tdsValue <= 100) {
-                waterQuality = 'Average quality';
-            } else {
-                waterQuality = 'Bad quality';
+             if(tdsValue == 0){
+                document.getElementById('field2').innerText = "Insert the TDS probe into Water";
             }
+             else {
+                 if (tdsValue < 10) {
+                waterQuality = 'Good for drinking';
+                }else if (tdsValue >= 10 && tdsValue <= 100) {
+                waterQuality = 'Average quality';
+               } else {
+                waterQuality = 'Bad quality';
+                 }
 
             // Display the data in the HTML
-            document.getElementById('field1').innerText = `TDS Value: ${tdsValue}`;
-            if(tdsValue ==0){
-                document.getElementById('field2').innerText = `${waterQuality}`;
+        document.getElementById('field2').innerText = `Quality of Water: ${waterQuality}`;
+                
             }
-            else{
-                document.getElementById('field2').innerText = `Quality of Water: ${waterQuality}`;
-            }
+             document.getElementById('field1').innerText = `TDS Value: ${tdsValue}`; 
+        
+                 
+           
+           
+    
         } catch (error) {
             console.error('Error fetching data:', error);
             document.getElementById('field1').innerText = 'Error fetching data.';
