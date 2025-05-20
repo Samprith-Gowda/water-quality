@@ -56,9 +56,11 @@
 
             // Determine water quality based on TDS value
             let waterQuality;
-            if (tdsValue < 10) {
+            if (tdsValue == 0 ) {
+                waterQuality = 'Insert the TDS probe into Water';
+            }else if (tdsValue < 10) {
                 waterQuality = 'Good for drinking';
-            } else if (tdsValue >= 10 && tdsValue <= 100) {
+            }else if (tdsValue >= 10 && tdsValue <= 100) {
                 waterQuality = 'Average quality';
             } else {
                 waterQuality = 'Bad quality';
