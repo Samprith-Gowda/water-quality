@@ -34,39 +34,51 @@
         <div id="field1" class="data">Field 1: Loading...</div>
         <div id="field2" class="data">Field 2: Loading...</div>
     </div>
-
     <script>
-        // Replace with your channel ID and Read API Key
-        const channelId = '2929516';
-        const readApiKey = '4XVYNREKAIJ8P1K1';
+    // Replace with your channel ID and Read API Key
+    const channelId = '2929516';
+    const readApiKey = '4XVYNREKAIJ8P1K1';
 
-        // Construct the URL for fetching data from ThingSpeak
-        const apiUrl = `https://api.thingspeak.com/channels/${channelId}/feeds.json?api_key=${readApiKey}&results=1`;
+    // Construct the URL for fetching data from ThingSpeak
+    const apiUrl = `https://api.thingspeak.com/channels/${channelId}/feeds.json?api_key=${readApiKey}&results=1`;
 
-        // Function to fetch the latest data
-        async function fetchData() {
-            try {
-                const response = await fetch(apiUrl);
-                const data = await response.json();
+    // Function to fetch the latest data
+    async function fetchData() {
+        try {
+            const response = await fetch(apiUrl);
+            const data = await response.json();
 
-                // Extract the latest feed data (the first entry)
-                const latestFeed = data.feeds[0];
+            // Extract the latest feed data (the first entry)
+            const latestFeed = data.feeds[0];
 
-                // Display the data in the HTML
-                document.getElementById('field1').innerText = `TDS Value: ${latestFeed.field1}`;
-                document.getElementById('field2').innerText = `Quality of Water: ${latestFeed.field2}`;
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                document.getElementById('field1').innerText = 'Error fetching data.';
-                document.getElementById('field2').innerText = 'Error fetching data.';
+            // Get the TDS value
+            const tdsValue = parseFloat(latestFeed.field1);
+
+            // Determine water quality based on TDS value
+            let waterQuality;
+            if (tdsValue < 10) {
+                waterQuality = 'Good for drinking';
+            } else if (tdsValue >= 10 && tdsValue <= 100) {
+                waterQuality = 'Average quality';
+            } else {
+                waterQuality = 'Bad quality';
             }
+
+            // Display the data in the HTML
+            document.getElementById('field1').innerText = `TDS Value: ${tdsValue}`;
+            document.getElementById('field2').innerText = `Quality of Water: ${waterQuality}`;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            document.getElementById('field1').innerText = 'Error fetching data.';
+            document.getElementById('field2').innerText = 'Error fetching data.';
         }
+    }
 
-        // Call the fetchData function to get the data
-        fetchData();
+    // Call the fetchData function to get the data
+    fetchData();
 
-        // Optional: Fetch the data every 30 seconds to keep it updated
-        setInterval(fetchData, 30000);
-    </script>
+    // Optional: Fetch the data every 30 seconds to keep it updated
+    setInterval(fetchData, 30000);
+</script>
 </body>
 </html>
